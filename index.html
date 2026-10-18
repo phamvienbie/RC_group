@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RC Group – Cộng đồng Discord tìm team nhanh</title>
+<meta name="description" content="RC Group – server Discord săn Levi: tạo team bằng một lệnh, Join bằng một nút, đủ 6 người là đi.">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="RC Group – Cộng đồng Discord tìm team nhanh">
+<meta property="og:description" content="Tạo team bằng một lệnh, Join bằng một nút, đủ 6 người là đi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23050505' stroke='%23f5c542' stroke-width='2'/%3E%3Cpath d='M6.5 17c2.2-5 4.6-5 6.8 0s4.6 5 6.8 0 3.4-3.2 5.2-1.4' fill='none' stroke='%23f5c542' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--panel:#0d0d0d;--panel2:#141414;--g1:#b8860b;--g2:#f5c542;--g3:#fff1a8;--txt:#f4efe2;--mut:#a79f8a;--line:rgba(245,197,66,.18);
+--gold:linear-gradient(110deg,#b8860b,#f5c542 25%,#fff1a8 50%,#f5c542 75%,#b8860b);
+--font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{background:var(--bg);color:var(--txt);font:400 clamp(.9rem,.86rem + .2vw,.98rem)/1.6 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--g2);color:#000}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#000}::-webkit-scrollbar-thumb{background:linear-gradient(var(--g1),var(--g2));border-radius:10px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--g3);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1100px,100% - 2.5rem);margin-inline:auto;position:relative}
+.gold-text{background:var(--gold);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gold);z-index:100;box-shadow:0 0 10px var(--g2)}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header,footer{position:relative;z-index:1}
+
+/* nav */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,5,5,.72);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:1.05rem;text-decoration:none;letter-spacing:-.01em}
+.logo .mark{width:1.9rem;height:1.9rem;filter:drop-shadow(0 0 6px rgba(245,197,66,.55));transition:transform .5s}.logo:hover .mark{transform:rotate(-12deg) scale(1.1)}
+.links{display:flex;gap:1.5rem;font-size:.88rem;font-weight:500}
+.links a{text-decoration:none;color:var(--mut);position:relative;transition:color .2s}
+.links a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--gold);transition:width .25s}
+.links a:hover{color:var(--g3)}.links a:hover::after{width:100%}
+
+/* buttons */
+.btn{position:relative;display:inline-flex;align-items:center;gap:.5rem;font:800 .92rem var(--font);color:#1a1200;text-decoration:none;padding:.8rem 1.5rem;border-radius:999px;border:0;cursor:pointer;background:var(--gold);background-size:250% 100%;animation:shine 4s linear infinite;box-shadow:0 0 0 1px rgba(255,241,168,.4),0 10px 30px rgba(245,197,66,.25);transition:transform .2s,box-shadow .2s;overflow:hidden}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 0 1px var(--g3),0 14px 44px rgba(245,197,66,.5)}
+.btn:active{transform:scale(.98)}
+.btn.sm{padding:.5rem 1.1rem;font-size:.85rem}
+.btn.ghost{background:transparent;color:var(--g3);animation:none;box-shadow:inset 0 0 0 1.5px var(--g2)}
+.btn.ghost:hover{background:rgba(245,197,66,.1)}
+
+/* hero */
+.hero{padding:clamp(3rem,8vw,6.5rem) 0 clamp(3rem,7vw,5rem)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .9rem;border:1px solid var(--line);border-radius:999px;font-size:.8rem;color:var(--g3);background:rgba(245,197,66,.06);margin-bottom:1.4rem}
+.badge b{width:.5rem;height:.5rem;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84}
+h1{font-weight:900;font-size:clamp(1.85rem,4.6vw,3.3rem);line-height:1.12;letter-spacing:-.03em;text-wrap:balance}
+.lead{margin:1.4rem 0 2rem;color:var(--mut);font-size:clamp(.95rem,.9rem + .3vw,1.05rem);max-width:31rem}
+.cta{display:flex;flex-wrap:wrap;gap:1rem}
+
+/* rgb gold border card */
+.card{position:relative;border-radius:18px;padding:2px;background:conic-gradient(from var(--a,0deg),#b8860b,#fff1a8,#f5c542,#7a5a05,#b8860b);animation:spin 6s linear infinite;box-shadow:0 0 60px rgba(245,197,66,.18)}
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spin{to{--a:360deg}}
+.card .in{background:var(--panel);border-radius:16px;padding:1.4rem}
+.tag{display:block;font-size:.75rem;color:var(--mut);margin-bottom:.8rem}
+.card h2{font-size:1rem;font-weight:800;margin-bottom:.7rem}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;font-size:.88rem;margin-bottom:1rem}
+.card dt{color:var(--mut)}
+.meter{height:7px;background:#1d1d1d;border-radius:9px;overflow:hidden;margin-bottom:1rem}
+.meter i{display:block;height:100%;width:50%;background:var(--gold);background-size:250% 100%;animation:shine 3s linear infinite;border-radius:9px;transition:width .5s cubic-bezier(.3,1.4,.5,1)}
+.members{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem;min-height:2.3rem}
+.members span{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:.15rem .8rem;font-size:.82rem;animation:pop .35s cubic-bezier(.3,1.6,.5,1)}
+.members span.me{background:var(--g2);color:#1a1200;font-weight:700}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.join{font:800 .92rem var(--font);background:#2f8f5b;color:#fff;border:0;border-radius:8px;padding:.7rem 1.8rem;cursor:pointer;transition:.2s}
+.join:hover:not(:disabled){background:#3aa86b;transform:translateY(-2px)}
+.join:disabled{background:#222;color:var(--mut);cursor:default}
+.again{background:none;border:0;color:var(--g2);font:500 .9rem var(--font);margin-left:.8rem;cursor:pointer;text-decoration:underline}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:18px;background:rgba(13,13,13,.8);overflow:hidden}
+.stats div{padding:1.6rem 1rem;text-align:center;border-right:1px solid var(--line)}
+.stats div:last-child{border:0}
+.stats b{display:block;font-size:clamp(1.5rem,3.2vw,2.2rem);font-weight:900;line-height:1.1}
+.stats span{color:var(--mut);font-size:.82rem}
+
+/* sections */
+section{padding:clamp(3.5rem,8vw,6rem) 0}
+.kick{color:var(--g2);font-weight:700;font-size:.85rem;margin-bottom:.6rem}
+h2.t{font-size:clamp(1.4rem,3vw,2.05rem);font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:2rem;max-width:32rem;text-wrap:balance}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.f{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.6rem;overflow:hidden;transition:transform .25s,border-color .25s}
+.f::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,0),rgba(245,197,66,.16),transparent 70%);opacity:0;transition:opacity .25s}
+.f:hover{transform:translateY(-5px);border-color:rgba(245,197,66,.55)}.f:hover::before{opacity:1}
+.f .ic{position:relative;width:3.2rem;height:3.2rem;border-radius:14px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,rgba(245,197,66,.22),rgba(245,197,66,.04));border:1px solid var(--line);margin-bottom:1.1rem;box-shadow:inset 0 0 14px rgba(245,197,66,.08);transition:box-shadow .3s,border-color .3s}
+.f .ic svg{width:1.7rem;height:1.7rem;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.f:hover .ic{border-color:rgba(245,197,66,.6);box-shadow:0 0 22px rgba(245,197,66,.3),inset 0 0 14px rgba(245,197,66,.15)}
+.f:hover .ic svg{transform:scale(1.15) rotate(-7deg)}
+.f h3{position:relative;font-size:1rem;font-weight:800;margin-bottom:.35rem}
+.f p{position:relative;color:var(--mut);font-size:.88rem}
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;counter-reset:s;position:relative}
+.steps li{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.6rem}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--gold);color:#1a1200;font-weight:900;margin-bottom:1rem;box-shadow:0 0 22px rgba(245,197,66,.45)}
+.steps b{display:block;font-size:1rem;margin-bottom:.3rem}
+.steps p{color:var(--mut);font-size:.88rem}
+.cmds{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+.cmd{display:grid;grid-template-columns:14rem 1fr auto;gap:1rem;align-items:center;padding:.9rem 1.2rem;font-size:.9rem;border-top:1px solid var(--line);transition:background .2s}
+.cmd:first-child{border:0}.cmd:hover{background:rgba(245,197,66,.05)}
+code{font:600 .85rem ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--g3);background:#1a1608;border:1px solid var(--line);padding:.25rem .65rem;border-radius:7px;white-space:nowrap}
+.cmd span{color:var(--mut)}
+.copy{font:600 .78rem var(--font);background:none;color:var(--g2);border:1px solid var(--line);border-radius:8px;padding:.35rem .8rem;cursor:pointer;transition:.2s}
+.copy:hover{background:var(--g2);color:#000}
+details{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:.8rem;transition:border-color .2s}
+details[open]{border-color:rgba(245,197,66,.55)}
+summary{cursor:pointer;list-style:none;padding:1rem 1.3rem;font-weight:700;font-size:.95rem;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--g2);font-size:1.4rem;line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 1.3rem 1.1rem;color:var(--mut);font-size:.88rem}
+.final{text-align:center}
+.final .box{position:relative;border:1px solid var(--line);border-radius:26px;padding:clamp(2.5rem,6vw,4.5rem) 1.5rem;background:radial-gradient(600px circle at 50% 0,rgba(245,197,66,.18),transparent 70%),var(--panel);overflow:hidden}
+.final h2{margin-inline:auto}
+.final p{color:var(--mut);font-size:.92rem;margin:-1rem auto 1.6rem;max-width:30rem}
+.tick{overflow:hidden;border-block:1px solid var(--line);padding:.8rem 0;background:#080808;white-space:nowrap}
+.tick div{display:inline-block;animation:mq 28s linear infinite;font-weight:800;font-size:.85rem;color:var(--g1)}
+.tick span{margin:0 1.5rem}
+@keyframes mq{to{transform:translateX(-50%)}}
+footer{padding:2.2rem 0 3rem;color:var(--mut);font-size:.8rem;text-align:center;border-top:1px solid var(--line)}
+#top{position:fixed;right:1.2rem;bottom:1.2rem;z-index:60;width:3rem;height:3rem;border-radius:50%;border:0;background:var(--gold);color:#000;display:grid;place-items:center;cursor:pointer;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s;box-shadow:0 8px 24px rgba(245,197,66,.4)}
+#top.show{opacity:1;transform:none;pointer-events:auto}
+#toast{position:fixed;left:50%;bottom:2rem;z-index:99;transform:translate(-50%,40px);background:var(--g2);color:#1a1200;font-weight:700;padding:.7rem 1.4rem;border-radius:999px;opacity:0;transition:.3s;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.on{opacity:1;transform:none}
+
+@media (max-width:480px){html{font-size:15px}.wrap{width:calc(100% - 2rem)}.cta .btn{flex:1;justify-content:center}}
+@media (max-width:860px){
+ .links{display:none}
+ .hero .wrap,.feat,.steps{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .cmd{grid-template-columns:1fr auto}.cmd span{grid-column:1/-1;order:3}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".5" stop-color="#f5c542"/><stop offset="1" stop-color="#b8860b"/></linearGradient>
+<linearGradient id="gf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5c542" stop-opacity=".28"/><stop offset="1" stop-color="#b8860b" stop-opacity=".05"/></linearGradient>
+</defs></svg>
+<div id="bar"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header>
+ <div class="wrap"><nav>
+  <a class="logo" href="#top-anchor"><svg class="mark" viewBox="0 0 32 32" fill="none" stroke="url(#gg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="url(#gf)"/><path d="M6.5 17c2.2-5 4.6-5 6.8 0s4.6 5 6.8 0 3.4-3.2 5.2-1.4"/><path d="M20 8.5l2.2 3.2" opacity=".7"/></svg><span class="gold-text">RC Group</span></a>
+  <div class="links"><a href="#tinh-nang">Tính năng</a><a href="#cach-dung">Cách dùng</a><a href="#lenh">Lệnh</a><a href="#faq">Hỏi đáp</a></div>
+  <a class="btn sm" href="https://discord.gg/hrUf2CngHv" target="_blank" rel="noopener">Vào Discord</a>
+ </nav></div>
+</header>
+
+<main id="top-anchor">
+ <div class="hero"><div class="wrap">
+  <div>
+   <span class="badge"><b></b>Cộng đồng đang mở cửa đón người mới</span>
+   <h1>Tìm đủ 6 người săn Levi <span class="gold-text">không cần spam chat.</span></h1>
+   <p class="lead">Một lệnh để tạo team, một nút để Join. Bot lo phần đếm người, tag cả server và dọn team khi xong việc.</p>
+   <div class="cta">
+    <a class="btn" href="https://discord.gg/hrUf2CngHv" target="_blank" rel="noopener">Vào server Discord</a>
+    <a class="btn ghost" href="#cach-dung">Xem cách dùng</a>
+   </div>
+  </div>
+  <div class="card"><div class="in">
+   <span class="tag">Ví dụ minh hoạ – bấm thử nút Join</span>
+   <h2>TEAM SĂN LEVI</h2>
+   <dl><dt>Host</dt><dd>Zero (<code>ZeroHunter_</code>)</dd><dt>Mục tiêu</dt><dd>Levi</dd><dt>Số lượng</dt><dd id="count">3/6</dd></dl>
+   <div class="meter"><i id="meter"></i></div>
+   <div class="members" id="members" aria-live="polite"><span>Zero</span><span>Kai</span><span>Lan</span></div>
+   <button class="join" id="join" type="button">Join</button><button class="again" id="again" type="button" hidden>Chơi lại</button>
+  </div></div>
+ </div></div>
+
+ <div class="wrap rv"><div class="stats">
+  <div><b class="gold-text" data-to="6">0</b><span>người mỗi team</span></div>
+  <div><b class="gold-text" data-to="5">0</b><span>phút hiệu lực ảnh xác minh</span></div>
+  <div><b class="gold-text" data-to="1">0</b><span>lệnh để tạo team</span></div>
+  <div><b class="gold-text" data-to="5">0</b><span>lệnh dễ nhớ</span></div>
+ </div></div>
+
+ <section id="tinh-nang"><div class="wrap">
+  <p class="kick rv">Tính năng</p><h2 class="t rv">Bot làm gì cho bạn</h2>
+  <div class="feat">
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="url(#gf)"/></svg></div><h3>Tạo team trong vài giây</h3><p>Gõ <code>/start</code>, bot đăng thông báo, tag @here và bạn trở thành Host.</p></div>
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l13 6.5-5.5 2-2 5.5z" fill="url(#gf)"/><path d="M15.5 15.5 20 20"/><path d="M18 13.5a5 5 0 0 1 2.5 2.5" opacity=".6"/></svg></div><h3>Join bằng một nút</h3><p>Bấm Join ngay trên tin nhắn team. Mỗi team tối đa 6 người, mỗi người chỉ ở một team.</p></div>
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3" fill="url(#gf)"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><h3>Xem mọi team đang mở</h3><p><code>/team list</code> hiện tất cả team còn chỗ, chọn và Join ngay trong danh sách.</p></div>
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="url(#gf)"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>Xác minh bằng ảnh</h3><p>Gửi một ảnh vào kênh xác minh để được Join. Ảnh có hiệu lực 5 phút, hết hạn thì gửi ảnh mới.</p></div>
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2.2" fill="#050505"/><circle cx="15.5" cy="12" r="2.2" fill="#050505"/><circle cx="8" cy="17" r="2.2" fill="#050505"/></svg></div><h3>Host toàn quyền</h3><p>Với <code>/panel</code>, Host sửa thông tin team, kick người, chuyển Host hoặc đóng team.</p></div>
+   <div class="f rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z" fill="url(#gf)"/><path d="M19 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div><h3>Dọn dẹp tự động</h3><p>Team đóng hoặc tin nhắn bị xoá thì bot cập nhật trạng thái, kênh luôn gọn.</p></div>
+  </div>
+ </div></section>
+
+ <section id="cach-dung"><div class="wrap">
+  <p class="kick rv">Cách dùng</p><h2 class="t rv">Bắt đầu trong ba bước</h2>
+  <ol class="steps">
+   <li class="rv"><b>Vào server</b><p>Bấm nút Discord, đọc luật và vào kênh xác minh.</p></li>
+   <li class="rv"><b>Gửi ảnh xác minh</b><p>Thả một ảnh vào kênh xác minh, bot thả ✅ khi đã ghi nhận.</p></li>
+   <li class="rv"><b>Join hoặc tạo team</b><p>Trong 5 phút, bấm Join một team có sẵn hoặc gõ <code>/start</code>.</p></li>
+  </ol>
+ </div></section>
+
+ <div class="tick" aria-hidden="true"><div id="tk"></div></div>
+
+ <section id="lenh"><div class="wrap">
+  <p class="kick rv">Lệnh</p><h2 class="t rv">Danh sách lệnh</h2>
+  <div class="cmds rv">
+   <div class="cmd"><code>/start</code><span>Tạo team săn Levi và tag @here</span><button class="copy" data-c="/start">Sao chép</button></div>
+   <div class="cmd"><code>/team list</code><span>Xem các team đang mở và Join</span><button class="copy" data-c="/team list">Sao chép</button></div>
+   <div class="cmd"><code>/panel</code><span>Bảng điều khiển cho Host và Admin</span><button class="copy" data-c="/panel">Sao chép</button></div>
+   <div class="cmd"><code>/end</code><span>Đóng và xoá team của bạn</span><button class="copy" data-c="/end">Sao chép</button></div>
+   <div class="cmd"><code>/help</code><span>Xem hướng dẫn (hoặc gõ .help trong kênh chat)</span><button class="copy" data-c="/help">Sao chép</button></div>
+  </div>
+ </div></section>
+
+ <section id="faq"><div class="wrap" style="max-width:780px">
+  <p class="kick rv">Hỏi đáp</p><h2 class="t rv">Câu hỏi thường gặp</h2>
+  <details class="rv"><summary>Tại sao bấm Join báo ảnh hết hạn?</summary><p>Ảnh xác minh chỉ có hiệu lực 5 phút. Gửi ảnh mới vào kênh xác minh rồi Join lại. Team bạn đã Join trước đó vẫn giữ nguyên.</p></details>
+  <details class="rv"><summary>Một team có tối đa bao nhiêu người?</summary><p>Mặc định là 6 người, và mỗi người chỉ ở một team tại một thời điểm. Admin có thể đổi trong <code>/panel</code>.</p></details>
+  <details class="rv"><summary>Làm sao để đổi Host hoặc kick người?</summary><p>Host dùng <code>/panel</code> để sửa thông tin team, kick thành viên, chuyển Host hoặc đóng team.</p></details>
+  <details class="rv"><summary>Tôi cần làm gì khi bot không phản hồi?</summary><p>Thử gõ <code>/help</code> hoặc <code>.help</code>. Nếu vẫn không được, nhắn Admin trong server để kiểm tra quyền của bot.</p></details>
+ </div></section>
+
+ <section class="final"><div class="wrap rv"><div class="box">
+  <h2 class="t"><span class="gold-text">Team đang chờ bạn</span></h2>
+  <p>Vào server, gửi một ảnh xác minh và tìm đồng đội ngay hôm nay.</p>
+  <a class="btn" href="https://discord.gg/hrUf2CngHv" target="_blank" rel="noopener">Vào server Discord</a>
+ </div></div></section>
+</main>
+
+<footer><div class="wrap">Cộng đồng do người chơi lập ra, không liên kết với Roblox hay nhà phát hành game.</div></footer>
+<button id="top" type="button" aria-label="Lên đầu trang"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// ticker
+$('#tk').innerHTML=('<span>RC GROUP</span><span><svg viewBox="0 0 12 12" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg></span><span>ĐỦ 6 NGƯỜI LÀ ĐI</span><span><svg viewBox="0 0 12 12" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg></span><span>JOIN BẰNG MỘT NÚT</span><span><svg viewBox="0 0 12 12" width="10" height="10" fill="currentColor" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg></span>').repeat(8);
+// progress + back to top
+var bar=$('#bar'),top=$('#top');
+addEventListener('scroll',function(){var h=document.documentElement,p=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(p*100)+'%';top.classList.toggle('show',h.scrollTop>600)},{passive:true});
+top.onclick=function(){scrollTo({top:0,behavior:rm?'auto':'smooth'})};
+// reveal + count up
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;e.target.classList.add('on');
+ e.target.querySelectorAll('[data-to]').forEach(function(n){var to=+n.dataset.to,t0=performance.now();
+  (function f(t){var k=Math.min((t-t0)/1200,1);n.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)});
+ io.unobserve(e.target)})},{threshold:.15});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%3)*80+'ms';io.observe(el)});
+// spotlight on cards
+document.querySelectorAll('.f').forEach(function(c){c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--x',e.clientX-r.left+'px');c.style.setProperty('--y',e.clientY-r.top+'px')})});
+// toast + copy
+var tt;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show')},1800)}
+document.querySelectorAll('.copy').forEach(function(b){b.onclick=function(){var v=b.dataset.c;
+ (navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){toast('Đã sao chép '+v)}).catch(function(){toast('Hãy tự chép: '+v)})}});
+// demo team
+var n=3,names=['Zero','Kai','Lan'],j=$('#join'),a=$('#again'),m=$('#members');
+function draw(){$('#count').textContent=n+'/6';$('#meter').style.width=(n/6*100)+'%'}draw();
+j.onclick=function(){if(n>=6)return;n++;var s=document.createElement('span');s.className='me';s.textContent='Bạn';m.appendChild(s);draw();j.disabled=true;j.textContent=n>=6?'Đủ team!':'Đã Join';a.hidden=false;if(n>=6)toast('Đủ 6 người, xuất phát!')};
+a.onclick=function(){n=3;m.innerHTML=names.map(function(x){return '<span>'+x+'</span>'}).join('');j.disabled=false;j.textContent='Join';a.hidden=true;draw()};
+// gold embers
+if(rm)return;var c=$('#fx'),x=c.getContext('2d'),W,H,P=[];
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener('resize',rs);
+for(var i=0;i<55;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.5+.15,d:Math.random()*6.28});
+(function L(){x.clearRect(0,0,W,H);P.forEach(function(p){p.y-=p.v;p.d+=.01;p.x+=Math.sin(p.d)*.3;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}
+ x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fillStyle='rgba(245,197,66,'+(.25+.35*Math.abs(Math.sin(p.d*3)))+')';x.shadowColor='#f5c542';x.shadowBlur=8;x.fill()});requestAnimationFrame(L)})();
+})();
+</script>
+</body>
+</html>
